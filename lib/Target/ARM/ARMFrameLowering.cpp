@@ -1541,11 +1541,3 @@ ARMFrameLowering::processFunctionBeforeCalleeSavedScan(MachineFunction &MF,
     AFI->setLRIsSpilledForFarJump(true);
   }
 }
-
-void
-ARMFrameLowering::getInitialFrameState(std::vector<MachineMove> &Moves) const {
-  // Initial state of the frame pointer is sp
-  MachineLocation Dst(MachineLocation::VirtualFP);
-  MachineLocation Src(ARM::SP, 0);
-  Moves.push_back(MachineMove(0, Dst, Src));
-}

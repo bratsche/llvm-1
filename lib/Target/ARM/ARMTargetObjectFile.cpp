@@ -47,22 +47,6 @@ void ARMElfTargetObjectFile::Initialize(MCContext &Ctx,
                                SectionKind::getMetadata());
 }
 
-unsigned ARMElfTargetObjectFile::getPersonalityEncoding() const {
-    return DW_EH_PE_indirect | DW_EH_PE_pcrel | DW_EH_PE_sdata4;
-}
-
-unsigned ARMElfTargetObjectFile::getLSDAEncoding() const {
-    return DW_EH_PE_pcrel | DW_EH_PE_sdata4;
-}
-
-unsigned ARMElfTargetObjectFile::getFDEEncoding() const {
-    return DW_EH_PE_pcrel | DW_EH_PE_sdata4;
-}
-
-unsigned ARMElfTargetObjectFile::getTTypeEncoding() const {
-  return DW_EH_PE_indirect | DW_EH_PE_pcrel | DW_EH_PE_sdata4;
-}
-
 //===----------------------------------------------------------------------===//
 //                               MACHO Target
 //===----------------------------------------------------------------------===//
@@ -71,21 +55,3 @@ void ARMMachOTargetObjectFile::Initialize(MCContext &Ctx,
                                         const TargetMachine &TM) {
   TargetLoweringObjectFileMachO::Initialize(Ctx, TM);
 }
-
-unsigned ARMMachOTargetObjectFile::getPersonalityEncoding() const {
-    return DW_EH_PE_indirect | DW_EH_PE_pcrel | DW_EH_PE_sdata4;
-}
-
-unsigned ARMMachOTargetObjectFile::getLSDAEncoding() const {
-    return DW_EH_PE_pcrel | DW_EH_PE_sdata4;
-}
-
-unsigned ARMMachOTargetObjectFile::getFDEEncoding() const {
-    return DW_EH_PE_pcrel | DW_EH_PE_sdata4;
-}
-
-unsigned ARMMachOTargetObjectFile::getTTypeEncoding() const {
-  return DW_EH_PE_indirect | DW_EH_PE_pcrel | DW_EH_PE_sdata4;
-}
-
-

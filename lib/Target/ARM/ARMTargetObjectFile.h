@@ -28,14 +28,6 @@ public:
 
   virtual void Initialize(MCContext &Ctx, const TargetMachine &TM);
 
-  unsigned getPersonalityEncoding() const;
-
-  unsigned getLSDAEncoding() const;
-
-  unsigned getFDEEncoding() const;
-
-  unsigned getTTypeEncoding() const;
-
   virtual const MCSection *getAttributesSection() const {
     return AttributesSection;
   }
@@ -50,14 +42,6 @@ public:
   {}
 
   virtual void Initialize(MCContext &Ctx, const TargetMachine &TM);
-
-  unsigned getPersonalityEncoding() const;
-
-  unsigned getLSDAEncoding() const;
-
-  unsigned getFDEEncoding() const;
-
-  unsigned getTTypeEncoding() const;
 };
 
 } // end namespace llvm
