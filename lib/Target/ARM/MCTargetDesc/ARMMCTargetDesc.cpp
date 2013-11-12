@@ -216,6 +216,7 @@ static MCRegisterInfo *createARMMCRegisterInfo(StringRef Triple) {
 
 static MCAsmInfo *createARMMCAsmInfo(const MCRegisterInfo &MRI, StringRef TT) {
   Triple TheTriple(TT);
+  MCAsmInfo *MAI;
 
   MCAsmInfo *MAI;
   switch (TheTriple.getOS()) {
