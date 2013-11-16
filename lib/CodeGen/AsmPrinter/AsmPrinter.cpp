@@ -38,6 +38,7 @@
 #include "llvm/MC/MCSection.h"
 #include "llvm/MC/MCStreamer.h"
 #include "llvm/MC/MCSymbol.h"
+#include "llvm/Support/CommandLine.h"
 #include "llvm/Support/ErrorHandling.h"
 #include "llvm/Support/Format.h"
 #include "llvm/Support/MathExtras.h"
@@ -59,6 +60,9 @@ static const char *const EHTimerName = "DWARF Exception Writer";
 static const char *const CodeViewLineTablesGroupName = "CodeView Line Tables";
 
 STATISTIC(EmittedInsts, "Number of machine instrs printed");
+
+cl::opt<bool> EnableMonoEH("enable-mono-eh-frame", cl::NotHidden,
+     cl::desc("Enable generation of Mono specific EH tables"));
 
 char AsmPrinter::ID = 0;
 
@@ -215,6 +219,12 @@ bool AsmPrinter::doInitialization(Module &M) {
   }
 
   DwarfException *DE = 0;
+
+  if (EnableMonoEH) {
+    DE = new DwarfMonoException(this);
+    return false;
+  }
+
   switch (MAI->getExceptionHandlingType()) {
   case ExceptionHandling::None:
     break;
@@ -760,7 +770,10 @@ void AsmPrinter::EmitFunctionBody() {
 
       switch (II->getOpcode()) {
       case TargetOpcode::PROLOG_LABEL:
-        emitPrologLabel(*II);
+        if (EnableMonoEH)
+          OutStreamer.EmitLabel(II->getOperand(0).getMCSymbol());
+        else
+          emitPrologLabel(*II);
         break;
 
       case TargetOpcode::EH_LABEL:
