@@ -269,7 +269,10 @@ bool GlobalMerge::doInitialization(Module &M) {
     if (isMustKeepGlobalVariable(I))
       continue;
 
+    // FIXME: This merges Mono's type_info globals, breaking EH
+/*
     if (DL->getTypeAllocSize(Ty) < MaxOffset) {
+>>>>>>> Add support for Mono EH to the JIT and the static compiler. For the JIT, emit a variant of the C++ EH structures which contains extra information required by mono, i.e. the stack location of 'this'. For the static compiler, emit separate tables instead of the normal C++ tables. Add back parts of the LLVM JIT EH support code removed in r181354 and r181649.
       if (TargetLoweringObjectFile::getKindForGlobal(I, TLI->getTargetMachine())
           .isBSSLocal())
         BSSGlobals[AddressSpace].push_back(I);
@@ -278,6 +281,7 @@ bool GlobalMerge::doInitialization(Module &M) {
       else
         Globals[AddressSpace].push_back(I);
     }
+*/
   }
 
   for (DenseMap<unsigned, SmallVector<GlobalVariable*, 16> >::iterator
