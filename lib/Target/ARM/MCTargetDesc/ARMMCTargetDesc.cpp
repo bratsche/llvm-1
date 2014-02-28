@@ -213,7 +213,6 @@ static MCAsmInfo *createARMMCAsmInfo(const MCRegisterInfo &MRI, StringRef TT) {
   Triple TheTriple(TT);
   MCAsmInfo *MAI;
 
-  MCAsmInfo *MAI;
   if (TheTriple.isOSBinFormatMachO())
     MAI = new ARMMCAsmInfoDarwin();
   else
