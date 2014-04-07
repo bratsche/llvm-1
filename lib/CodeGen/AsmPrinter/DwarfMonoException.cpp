@@ -675,16 +675,7 @@ void DwarfMonoException::endFunction(const MachineFunction *MF)
 }
 
 void DwarfMonoException::endModule() {
-  const TargetLoweringObjectFile &TLOF = Asm->getObjFileLowering();
-
-  // Emit references to all used personality functions
   const std::vector<const Function*> &Personalities = MMI->getPersonalities();
-  for (size_t i = 0, e = Personalities.size(); i != e; ++i) {
-    if (!Personalities[i])
-      continue;
-    MCSymbol *Sym = TLOF.getSymbol(Personalities[i], *Asm->Mang);
-    TLOF.emitPersonalityValue(Asm->OutStreamer, Asm->TM, Sym);
-  }
 
   EmitMonoEHFrame(Personalities[0]);
 }
