@@ -627,7 +627,8 @@ void DwarfMonoException::EmitMonoEHFrame(const Function *Personality)
 
       CFAOffset = CIECFAOffset;
 
-      EmitCFIInstructions(Streamer, EHFrameInfo.Instructions, NULL, CFAOffset, dataAlignmentFactor);
+      MCSymbol *BeginSym = Asm->GetTempSymbol("eh_func_begin", Index);
+      EmitCFIInstructions(Streamer, EHFrameInfo.Instructions, BeginSym, CFAOffset, dataAlignmentFactor);
 
       Streamer.AddBlankLine();
   }
