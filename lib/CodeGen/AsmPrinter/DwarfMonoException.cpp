@@ -117,9 +117,9 @@ void EmitCFIInstruction(MCStreamer &Streamer,
       Streamer.AddComment(Twine("Reg ") + Twine(Instr.getRegister()));
     Streamer.EmitULEB128IntValue(Instr.getRegister());
 
-    // createX86MCAsmInfo () passes in a positive value, which is
-    // negated by createDefCfa ()
-    CFAOffset = -Instr.getOffset();
+    // Backends pass a negative value to createDefCfa () which
+	// negates it back
+    CFAOffset = Instr.getOffset();
 
     if (VerboseAsm)
       Streamer.AddComment(Twine("Offset " + Twine(CFAOffset)));
