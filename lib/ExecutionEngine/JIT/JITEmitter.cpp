@@ -325,7 +325,7 @@ namespace {
     JITResolver Resolver;
 
     /// DE - The dwarf emitter for the jit.
-    OwningPtr<JITDwarfEmitter> DE;
+    std::unique_ptr<JITDwarfEmitter> DE;
 
     /// LabelLocations - This vector is a mapping from Label ID's to their
     /// address.
