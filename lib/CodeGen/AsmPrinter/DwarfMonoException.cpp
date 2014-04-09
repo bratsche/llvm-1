@@ -257,7 +257,9 @@ void DwarfMonoException::PrepareMonoLSDA(FunctionEHFrameInfo *EHFrameInfo) {
   for (unsigned i = 0, N = PadInfos.size(); i != N; ++i)
     LandingPads.push_back(&PadInfos[i]);
 
-  std::sort(LandingPads.begin(), LandingPads.end(), PadLT);
+  std::sort(LandingPads.begin(), LandingPads.end(),
+          [](const LandingPadInfo *L,
+			 const LandingPadInfo *R) { return L->TypeIds < R->TypeIds; });
 
 #if 0
   // Compute the actions table and gather the first action index for each
@@ -399,7 +401,9 @@ void DwarfMonoException::EmitMonoLSDA(const FunctionEHFrameInfo *EFI) {
   for (unsigned i = 0, N = PadInfos.size(); i != N; ++i)
     LandingPads.push_back(&PadInfos[i]);
 
-  std::sort(LandingPads.begin(), LandingPads.end(), PadLT);
+  std::sort(LandingPads.begin(), LandingPads.end(),
+          [](const LandingPadInfo *L,
+			 const LandingPadInfo *R) { return L->TypeIds < R->TypeIds; });
 
   // Invokes and nounwind calls have entries in PadMap (due to being bracketed
   // by try-range labels when lowered).  Ordinary calls do not, so appropriate
