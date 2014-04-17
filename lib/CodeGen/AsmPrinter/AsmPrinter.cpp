@@ -806,7 +806,7 @@ void AsmPrinter::EmitFunctionBody() {
         break;
       }
 
-      if (ShouldPrintDebugScopes) {
+      if (ShouldPrintDebugScopes || EnableMonoEH) {
         for (const HandlerInfo &HI : Handlers) {
           NamedRegionTimer T(HI.TimerName, HI.TimerGroupName,
                              TimePassesIsEnabled);
