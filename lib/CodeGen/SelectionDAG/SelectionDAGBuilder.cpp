@@ -3609,10 +3609,6 @@ void SelectionDAGBuilder::handleStore(const Value *SrcV, const Value *PtrV,
   SmallVector<SDValue, 4> Chains(std::min(unsigned(MaxParallelChains),
                                           NumValues));
   EVT PtrVT = Ptr.getValueType();
-  bool isVolatile = I.isVolatile();
-  bool isNonTemporal = I.getMetadata("nontemporal") != nullptr;
-  unsigned Alignment = I.getAlignment();
-  const MDNode *TBAAInfo = I.getMetadata(LLVMContext::MD_tbaa);
 
   unsigned ChainI = 0;
   for (unsigned i = 0; i != NumValues; ++i, ++ChainI) {
@@ -5535,7 +5531,6 @@ void SelectionDAGBuilder::LowerCallTo(ImmutableCallSite CS, SDValue Callee,
   PointerType *PT = cast<PointerType>(CS.getCalledValue()->getType());
   FunctionType *FTy = cast<FunctionType>(PT->getElementType());
   Type *RetTy = FTy->getReturnType();
-  MachineModuleInfo &MMI = DAG.getMachineFunction().getMMI();
   MCSymbol *BeginLabel = nullptr;
 
   TargetLowering::ArgListTy Args;
