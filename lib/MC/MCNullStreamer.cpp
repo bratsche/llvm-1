@@ -41,6 +41,11 @@ namespace {
 
     void EmitAssignment(MCSymbol *Symbol, const MCExpr *Value) override {}
     void EmitWeakReference(MCSymbol *Alias, const MCSymbol *Symbol) override {}
+    void EmitDwarfAdvanceLineAddr(int64_t LineDelta,
+                                  const MCSymbol *LastLabel,
+                                  const MCSymbol *Label,
+                                  unsigned PointerSize) override {}
+
     bool EmitSymbolAttribute(MCSymbol *Symbol,
                              MCSymbolAttr Attribute) override {
       return true;
